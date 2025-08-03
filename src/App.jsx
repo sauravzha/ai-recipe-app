@@ -34,10 +34,13 @@ export default function App() {
       const ingredientsText = ingredients.map(ing => `${ing.name} (${ing.qty} ${ing.unit})`).join(', ');
       const preferenceText = `Meal type: ${preferences.type}. Cooking time: ${preferences.time}.`;
 
-      // --- Make the API call to your custom backend ---
-      // IMPORTANT: Ensure your backend Node.js server is running on http://localhost:3001
-      // In production, this URL will be your deployed backend's URL.
-      const response = await fetch('http://localhost:3001/generate-recipe', {
+      // --- CORRECTED CODE ---
+      // 1. Get the API URL from the environment variable.
+      // This works for both local development (using .env.local) and production on Vercel.
+      const apiUrl = import.meta.env.VITE_API_URL;
+
+      // 2. Use that variable in your fetch call.
+      const response = await fetch(`${apiUrl}/generate-recipe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
